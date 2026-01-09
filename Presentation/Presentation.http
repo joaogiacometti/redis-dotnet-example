@@ -1,0 +1,17 @@
+@Presentation_HostAddress = http://localhost:8080
+
+GET {{Presentation_HostAddress}}/products/
+Accept: application/json
+
+###
+
+POST{{Presentation_HostAddress}}/products/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Mouse",
+  "description": "Mechanical Mouse"
+}
+
+###
