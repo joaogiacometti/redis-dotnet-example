@@ -11,8 +11,6 @@ public class CreateProductUseCase(IProductRepository repository, ICacheService c
 
         await repository.CreateAsync(newItem, cancellationToken);
 
-        await cacheService.RemoveAsync(CacheConstants.Products.All);
-
         return newItem.Id;
     }
 }

@@ -1,6 +1,7 @@
 using Application;
 using Application.Products.Commands.Create;
 using Application.Products.Queries.GetAll;
+using Application.Products.Queries.GetById;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,17 @@ app.MapGet("/products", async (
     var products = await useCase.ExecuteAsync(useCache: useCache, cancellationToken);
     
     return Results.Ok(products);
+});
+
+app.MapGet("/products/{id:guid}", async (
+    [FromServices] GetProductByIdUseCase useCase,
+    [FromRoute] Guid id,
+    CancellationToken cancellationToken,
+    [FromQuery] bool useCache = true ) =>
+{
+    var product = await useCase.ExecuteAsync(id: id, useCache: useCache, cancellationToken);
+    
+    return Results.Ok(product);
 });
 
 app.MapPost("/products", async (

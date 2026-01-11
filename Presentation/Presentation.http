@@ -1,6 +1,16 @@
 @Presentation_HostAddress = http://localhost:8080
 
-GET {{Presentation_HostAddress}}/products/
+GET {{Presentation_HostAddress}}/products?cached=false
+Accept: application/json
+
+###
+
+GET {{Presentation_HostAddress}}/products?cached=true
+Accept: application/json
+
+###
+
+GET {{Presentation_HostAddress}}/products/18fe8q16d-938a-4910-9900-2322f88caa21?cached=true
 Accept: application/json
 
 ###

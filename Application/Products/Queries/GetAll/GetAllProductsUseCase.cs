@@ -4,18 +4,18 @@ namespace Application.Products.Queries.GetAll;
 
 public class GetAllProductsUseCase(IProductRepository repository, ICacheService cacheService)
 {
-    public async Task<List<ResponseProductGetAll>> ExecuteAsync(bool useCache, CancellationToken cancellationToken)
+    public async Task<List<ResponseProduct>> ExecuteAsync(bool useCache, CancellationToken cancellationToken)
     {
         if (useCache)
         {
-            var cached = await cacheService.GetAsync<List<ResponseProductGetAll>>(CacheConstants.Products.All);
+            var cached = await cacheService.GetAsync<List<ResponseProduct>>(CacheConstants.Products.All);
             if (cached != null)
                 return cached;
         }
         
         var items = await repository.GetAllAsync(cancellationToken);
         var response = items
-            .Select(p => new ResponseProductGetAll(
+            .Select(p => new ResponseProduct(
                 p.Id,
                 p.Name,
                 p.Description))

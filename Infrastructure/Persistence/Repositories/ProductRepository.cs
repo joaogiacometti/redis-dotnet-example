@@ -6,11 +6,18 @@ namespace Infrastructure.Persistence.Repositories;
 
 public class ProductRepository(AppDbContext dbContext) : IProductRepository
 {
-    public async Task<IReadOnlyList<Product>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<List<Product>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await dbContext.Products
             .AsNoTracking()
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await dbContext.Products
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
     }
 
     public async Task CreateAsync(Product product, CancellationToken cancellationToken)

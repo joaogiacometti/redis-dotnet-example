@@ -18,11 +18,6 @@ public static class DependencyInjection
         if (string.IsNullOrWhiteSpace(connectionString))
             throw new InvalidOperationException("DefaultConnection is not configured.");
 
-        services.AddDbContext<AppDbContext>(options => 
-        { 
-            options.UseNpgsql(connectionString); 
-        });
-
         var redisConnectionString = configuration.GetConnectionString("Redis");
         if (string.IsNullOrWhiteSpace(redisConnectionString))
             throw new InvalidOperationException("Redis connection string is not configured.");
