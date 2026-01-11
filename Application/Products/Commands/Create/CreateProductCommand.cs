@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Application.Products.Create;
+namespace Application.Products.Commands.Create;
 
 public class CreateProductCommand(IProductRepository repository)
 {

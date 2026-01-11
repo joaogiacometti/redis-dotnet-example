@@ -1,4 +1,4 @@
-namespace Application.Products.GetAll;
+namespace Application.Products.Queries.GetAll;
 
 public class GetAllProductsQuery(IProductRepository repository)
 {
