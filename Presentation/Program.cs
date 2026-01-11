@@ -1,6 +1,6 @@
 using Application;
-using Application.Products.Create;
-using Application.Products.GetAll;
+using Application.Products.Commands.Create;
+using Application.Products.Queries.GetAll;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,17 +19,22 @@ if (app.Environment.IsDevelopment())
     DotNetEnv.Env.Load(".env");
 }
 
-app.MapGet("/products", async ([FromServices] GetAllProductsQuery query, CancellationToken cancellationToken) =>
+app.MapGet("/products", async (
+    [FromServices] GetAllProductsUseCase useCase,
+    CancellationToken cancellationToken,
+    [FromQuery] bool useCache = true ) =>
 {
-    var products = await query.ExecuteAsync(cancellationToken);
+    var products = await useCase.ExecuteAsync(useCache: useCache, cancellationToken);
     
     return Results.Ok(products);
 });
 
-app.MapPost("/products", async 
-    ([FromServices] CreateProductCommand command, [FromBody] RequestCreateProduct request, CancellationToken cancellationToken) =>
+app.MapPost("/products", async (
+        [FromServices] CreateProductUseCase useCase, 
+        [FromBody] RequestCreateProduct request, 
+        CancellationToken cancellationToken) =>
 {
-    var id = await command.ExecuteAsync(request, cancellationToken);
+    var id = await useCase.ExecuteAsync(request, cancellationToken);
     
     return Results.Created($"/products/{id}", id);
 });
